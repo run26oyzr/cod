@@ -1,16 +1,21 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
 const int mod = 1e6;
 set <int> pet;
 set <int>::iterator it_pet;
 set <int> person;
 set <int>::iterator it_person;
-int main(){
+signed main(){
     int cnt_pet = 0, cnt_person = 0;
     int n;
     cin >> n;
     int x, y;
     long long ans = 0;
+    person.insert((int)(-1e9));
+    person.insert((int)(1e9));
+    pet.insert((int)(-1e9));
+    pet.insert((int)(1e9));
     while(n--){
         cin >> x >> y;
         if (x == 0){
