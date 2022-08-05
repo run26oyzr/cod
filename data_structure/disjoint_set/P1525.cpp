@@ -37,7 +37,7 @@ int main(){
     }
     sort(t + 1, t + k + 1);
     for (int i = 1; i <= k; i++){
-        if (!check(0, t[i].x, t[i].y)){
+        if (!check(2, t[i].x, t[i].y)){
             cout << t[i].val;
             system("Pause");
             return 0;
