@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxn = 2 * 1e5 + 5, maxm = 4 * 1e5 + 5;
-int cnt = -1;
+const int maxm = 2 * 1e5 + 5, maxn = 4 * 1e5 + 5;
+int cnt = 0;
 int fa[maxn];
 int ans[maxn];
 int tot;
@@ -12,7 +12,7 @@ struct Node{
 }t[maxm];
 int h[maxn];
 void addedge(int u, int v){
-	++cnt;
+	cnt++;
 	t[cnt].previos = u, t[cnt].val = v; t[cnt].next = h[u]; h[u] = cnt;
 }
 int getfather(int x){
@@ -29,22 +29,22 @@ int main(){
     cin >> n >> m;
     for (int i = 1; i <= n; i++) fa[i] = i;
     int x, y;
-    while(m--){
+    for(int i = 1; i <= m; i++){
         cin >> x >> y;
         addedge(x, y);
         addedge(y, x);
     }
     int k;
     cin >> k;
-    tot = n - k;
     for (int i = 1; i <= k; i++){
         cin >> attack_order[i];
         attacked[attack_order[i]] = 1;
     }
+    tot = n - k;
     for (int i = 1; i <= 2 * m; i++){
-        if (!attacked[t[i].val] && !attacked[t[i].previos] && (getfather(t[i].val) != getfather(t[i].previos))){
-            merge(t[i].val, t[i].previos);
+        if ((!attacked[t[i].val]) && (!attacked[t[i].previos]) && (getfather(t[i].val) != getfather(t[i].previos))){
             tot--;
+            merge(t[i].val, t[i].previos);
         }
     }
     ans[k + 1] = tot;
