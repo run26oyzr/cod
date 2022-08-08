@@ -19,11 +19,8 @@ void pushdown(int id){
     t[rson].sum = t[rson].sum * t[id].lc + (t[id].la * len(rson)); t[rson].sum %= p;
     t[lson].lc *= t[id].lc; t[lson].lc %= p;
     t[rson].lc *= t[id].lc; t[rson].lc %= p;
-    // t[lson].la = (t[lson].la * t[id].lc % p + t[id].la); t[lson].lc %= p;
-    // t[rson].la = (t[rson].la * t[id].lc % p + t[id].la); t[rson].lc %= p;
-    // 不拆分成2个表达式运算是可以AC的，那应该是 t[lson].la * t[id].lc + t[id].la 正好会爆？
-    t[lson].la = (t[lson].la * t[id].lc + t[id].la) % p;
-    t[rson].la = (t[rson].la * t[id].lc + t[id].la) % p;
+    t[lson].la = (t[lson].la * t[id].lc % p + t[id].la); t[lson].lc %= p;
+    t[rson].la = (t[rson].la * t[id].lc % p + t[id].la); t[rson].lc %= p;
     t[id].lc = 1; t[id].la = 0;
 }
 void buildtree(int id, int L, int R){
@@ -117,8 +114,8 @@ int query(int id, int L, int R){
 	return val; */
 }
 signed main(){
-    freopen("P3373.in", "r", stdin);
-    freopen("P3373.out", "w", stdout);
+    // freopen("P3373.in", "r", stdin);
+    // freopen("P3373.out", "w", stdout);
     cin >> n >> m >> p;
     for (int i = 1; i <= n; i++) cin >> a[i];
     int x, y, z, k;
