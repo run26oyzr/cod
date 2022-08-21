@@ -12,16 +12,17 @@ void addEdge(int u, int v, int c){
 }
 int s, dis[maxn], vis[maxn], num[maxn];
 queue<int> q;
-bool spfa(){
+bool spfa(int x){
+    s = x;
 	while(!q.empty()) q.pop();
-	memset(dis, 0x3f, sizeof(dis));
+	memset(dis, -1, sizeof(dis));
 	memset(vis, 0, sizeof(vis));
 	dis[s] = 0; q.push(s); num[s] = 1; vis[s] = 1;
 	while(!q.empty()){
 		int u = q.front(); q.pop(); vis[u] = 0;
 		for (int i = h[u]; i; i = t[i].next){
 			int v = t[i].v;
-			if (dis[v] > dis[u] + t[i].c){
+			if (dis[v] < dis[u] + t[i].c){
 				dis[v] = dis[u] + t[i].c;
 				if (!vis[v]){
 					q.push(v); vis[v] = 1; num[v] ++;
@@ -38,7 +39,6 @@ int main(){
     while(T--){
         tot = 0;
         cin >> n >> m;
-        s = n + 1;
         memset(num, 0, sizeof(num));
         memset(h, 0, sizeof(h));
         for (int i = 1; i <= n; i++){
@@ -50,14 +50,12 @@ int main(){
             addEdge(y, x, z);
             addEdge(x, y, -z);
         }
-        n++;
+        int flag = 0;
         for (int i = 1; i <= n; i++){
-            addEdge(n, i, 0);
+            if (spfa(i)) flag = 1;
         }
-        if (spfa()) cout << "true" << endl;
-        else{
-            cout << "false" << endl;
-        }
+        if (!flag) cout << "false" << endl;
+        else cout << "true" << endl;
     }
     system("pause");
     return 0;
