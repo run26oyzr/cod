@@ -47,14 +47,14 @@ int main(){
         int x, y, z;
         for (int i = 1; i <= m; i++){
             cin >> x >> y >> z;
-            addEdge(y, x, z);
-            addEdge(x, y, -z);
+            addEdge(y, x - 1, z);
+            addEdge(x - 1, y, -z);
         }
         int flag = 0;
         for (int i = 1; i <= n; i++){
             if (spfa(i)) flag = 1;
         }
-        if (!flag) cout << "false" << endl;
+        if (flag) cout << "false" << endl;
         else cout << "true" << endl;
     }
     system("pause");
