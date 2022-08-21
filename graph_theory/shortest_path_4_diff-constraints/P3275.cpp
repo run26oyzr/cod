@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxn = 1e4 + 5;
+const int maxn = 1e5 + 5;
 int h[maxn], tot = 0;
 int n, m;
 struct node{
@@ -14,9 +14,6 @@ int s, dis[maxn], vis[maxn], num[maxn];
 queue<int> q;
 bool spfa(int x){
     s = x;
-	while(!q.empty()) q.pop();
-	memset(dis, -1, sizeof(dis));
-	memset(vis, 0, sizeof(vis));
 	dis[s] = 0; q.push(s); num[s] = 1; vis[s] = 1;
 	while(!q.empty()){
 		int u = q.front(); q.pop(); vis[u] = 0;
@@ -38,18 +35,26 @@ int main(){
     cin >> n >> m;
     int x, y, z;
     for (int i = 1; i <= m; i++){
-        cin >> x >> y >> z;
+        scanf("%d %d %d" , &x, &y, &z);
         if (x == 1){
             addEdge(y, z, 0);
             addEdge(z, y, 0);
         }
         if (x == 2){
+            if (y == z){
+                cout << -1;
+                return 0;
+            }
             addEdge(y, z, 1);
         }
         if (x == 3){
             addEdge(z, y, 0);
         }
         if (x == 4){
+            if (y == z){
+                cout << -1;
+                return 0;
+            }
             addEdge(z, y, 1);
         }
         if (x == 5){
@@ -57,7 +62,7 @@ int main(){
         }
     }
     n++;
-    for (int i = 1; i <= n; i++){
+    for (int i = 1; i < n; i++){
         addEdge(n, i, 1);
     }
     if (spfa(n)) cout << -1;
