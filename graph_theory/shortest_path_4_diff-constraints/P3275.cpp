@@ -10,7 +10,7 @@ void addEdge(int u, int v, int c){
 	++tot;
 	t[tot].c = c; t[tot].v = v; t[tot].next = h[u]; h[u] = tot;
 }
-int s, dis[maxn], vis[maxn], num[maxn];
+long long s, dis[maxn], vis[maxn], num[maxn];
 queue<int> q;
 bool spfa(int x){
     s = x;
@@ -62,12 +62,12 @@ int main(){
         }
     }
     n++;
-    for (int i = 1; i < n; i++){
+    for (int i = n - 1; i >= 1; i--){
         addEdge(n, i, 1);
     }
     if (spfa(n)) cout << -1;
     else{
-        int ans = 0;
+        long long ans = 0;
         for (int i = 1; i < n; i++){
             ans += dis[i];
         }
