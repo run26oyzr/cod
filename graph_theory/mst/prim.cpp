@@ -18,7 +18,7 @@ void addEdge(int u, int v, int c){
     h[u] = tot;
 }
 priority_queue <Queue> q;
-int dis[maxn], vis[maxn];//dis:该点与点集S之间的最短距离
+int dis[maxn], vis[maxn];//dis: 该点与点集S之间的最短距离; vis: 是否已经作为最优值更新过其它节点
 int prim(){
     dis[1] = 0;
     Queue now, nt;
@@ -26,10 +26,10 @@ int prim(){
     int res = 0;
     while(!q.empty()){
         int u = q.top().id; q.pop();
-        if (vis[u]) continue;//vis:是否已经作为最优值更新过其它节点
-        res += dis[u];
+        if (vis[u]) continue;//已经作为最优值更新过其它节点
+        res += dis[u];//累加边权
         vis[u] = 1;
-        for (int i = h[u]; i; i = t[i].next){
+        for (int i = h[u]; i; i = t[i].next){//i点扩展
             int v = t[i].v;
             if (dis[v] > t[i].c){
                 dis[v] = t[i].c;
