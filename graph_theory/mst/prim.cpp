@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxn = 1e5 + 5; 
+const int maxn = 1e5 + 5, maxm = 1e5 + 5; 
 struct Node{
     int v, c, next;
-}t[maxn];
+}t[maxm << 2];
 int tot = 0, h[maxn];
 struct Queue{
     int id, dis;//dis优化
