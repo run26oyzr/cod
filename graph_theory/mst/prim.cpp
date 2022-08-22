@@ -37,6 +37,7 @@ int prim(){
             }
         }
     }
+    return res;
 }
 int main(){
 
