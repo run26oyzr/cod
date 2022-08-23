@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int maxn = 1e5 + 5, maxm = 1e5 + 5, mod = 80112002;
+const int maxn =  5 * 1e3 + 5, maxm = 5 * 1e5 + 5, mod = 80112002;
 int n, m;
 
 struct Node{
