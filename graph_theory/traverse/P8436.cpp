@@ -32,14 +32,13 @@ void dfs(int u, int fa){
         if (!dfn[v]){
             dfs(v, u);
             low[u] = min(low[v], low[u]);
-            if (low[v] > dfn[u]){
+            if (u != fa && low[v] > dfn[u]){
                 bccnum++;
                 while(1){
                     int tmp = st[tp--];
                     bcc[bccnum].push_back(tmp);
                     if(tmp == v) break;
                 }
-                bcc[bccnum].push_back(u);
             }
         }
         else low[u] = min(dfn[v], low[u]);
@@ -59,7 +58,17 @@ int main(){
             bccnum++;
             bcc[bccnum].push_back(i);
         }
-        else if(!dfn[i]) dfs(i, 0);
+        else{
+            if(!dfn[i]){
+                dfs(i, 0);
+                if (tp){
+                    bccnum++;
+                    while(tp){
+                        bcc[bccnum].push_back(st[tp--]);
+                    }
+                }
+            }
+        }
     }
     cout << bccnum << endl;
     for (int i = 1; i <= bccnum; i++){
