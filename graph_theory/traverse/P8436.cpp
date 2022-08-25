@@ -54,18 +54,12 @@ int main(){
         addEdge(x, y); addEdge(y, x);
     }
     for (int i = 1; i <= n; i++){
-        if (out[i] == 0 && in[i] == 0){
-            bccnum++;
-            bcc[bccnum].push_back(i);
-        }
-        else{
-            if(!dfn[i]){
-                dfs(i, 0);
-                if (tp){
-                    bccnum++;
-                    while(tp){
-                        bcc[bccnum].push_back(st[tp--]);
-                    }
+        if(!dfn[i]){
+            dfs(i, 0);
+            if (tp){
+                bccnum++;
+                while(tp){
+                    bcc[bccnum].push_back(st[tp--]);
                 }
             }
         }
