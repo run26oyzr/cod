@@ -1,3 +1,4 @@
+//开O2过了（本来有两个点TLE）
 #include <bits/stdc++.h>
 using namespace std;
 const int maxn = 5 * 1e3 + 5, maxm = 5 * 1e3 + 5; 
