@@ -15,30 +15,32 @@ void addEdge(int u, int v){
     out[u] ++;
 }
 
+int n, m;
 int q[maxn];
 int f[maxn];
 int topo(int x, int y){
     int res = 0;
-    int front = 1, rear = 0;
+    int front = 0, rear = 0;
     for (int i = x; i <= y; i++){
         if (in[i] == 0){
             q[++rear] = i;
-            f[i] = 1;
+            if (i <= n) f[i] = 1;
         }
     }
     while(front <= rear){
-        int u = q[front++];
+        int u = q[++front];
+        res = max(res, f[u]);
+        cout << u << ' ' << f[u] << endl;
         for (int i = h[u]; i; i = t[i].next){
-            f[t[i].v] = min(f[t[i].v], f[u] + 1);
-            in[t[i].v] --;
-            if (in[t[i].v] != 0) continue;
-            else q[++rear] = t[i].v;
+            int v = t[i].v;
+            f[v] = max(f[v], f[u] + (v <= n));
+            in[v] --;
+            if (in[v] == 0) q[++rear] = v;
         }
     }
     return res;
 }
 
-int n, m;
 int ain[maxn], vis[maxn], aout[maxn];
 int main(){
     cin >> n >> m;
@@ -47,6 +49,8 @@ int main(){
     while(m--){
         cin >> c;
         int toti = 0, toto = 0;
+        memset(aout, 0, sizeof(aout));
+        memset(ain, 0, sizeof(ain));
         memset(vis, 0, sizeof(vis));
         for (int i = 1; i <= c; i++){
             cin >> ain[i];
@@ -62,8 +66,13 @@ int main(){
             addEdge(aout[i], ss);
         for (int i = 1; i <= c; i++)
             addEdge(ss, ain[i]);
+        // for (int i = 1; i <= toto; i++){
+        //     for (int j = 1; j <= c; j++){
+        //         addEdge(aout[i], ain[j]);
+        //     }
+        // }
     }
-    cout << (tt - n) - topo(1, tt);// m = tt - n   ans-(tt - n)
+    cout << topo(1, tt);// m = tt - n   ans-(tt - n)
     system("pause");
     return 0;
 }
