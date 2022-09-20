@@ -11,22 +11,22 @@ void addEdge(int u, int v){
 }
 void addEdge2(int u, int v){
 	++tot2;
-	t2[tot].v = v, t2[tot].next = h2[u], h2[u] = tot;
+	t2[tot2].v = v, t2[tot2].next = h2[u], h2[u] = tot2;
 	in[v] ++;
 }
 stack <int> s;
+int sum[maxn];
 int val[maxn];
-int z[maxn];
-void dfs(int u, int fa){
+void dfs(int u){
 	low[u] = dfn[u] = ++dep;
 	s.push(u);
 	for (int i = h[u]; i; i = t[i].next){
 		int v = t[i].v;
 		if (!dfn[v]){
-			dfs(v, u);
+			dfs(v);
 			low[u] = min(low[u], low[v]);
 		}
-		else if (!sccnum[i]){
+		else if (!sccnum[v]){
 			low[u] = min(low[u], dfn[v]);
 		}
 	}
@@ -34,8 +34,8 @@ void dfs(int u, int fa){
 		scccnt++;
 		while(1){
 			int tmp = s.top(); s.pop();
-			sccnum[tmp] = scccnt;
-			val[scccnt] += z[tmp];
+			sccnum[tmp] = u;
+			sum[u] += val[tmp];
 			if (tmp == u) break;
 		}
 	}
@@ -47,29 +47,29 @@ int topo(int x){
     int res = 0;
     int front = 1, rear = 0;
     for (int i = 1; i <= x; i++){
-        if (in[i] == 0){
+        // cout << in[i] << endl;
+        if (in[i] == 0 && sccnum[i] == i){
             q[++rear] = i;
-            f[i] = val[i];
+            f[i] = sum[i];
         }
     }
     while(front <= rear){
         int u = q[front++];
-        res = max(res, f[u]);
-        for (int i = h2[u]; i; i = t[i].next){
-        	f[t[i].v] = max(f[t[i].v], f[u] + val[t[i].v]);
-        	res = max(res, f[t[i].v]);
-            in[t[i].v] --;
-            if (in[t[i].v] == 0) 
-                q[++rear] = t[i].v;
+        for (int i = h2[u]; i; i = t2[i].next){
+        	f[t2[i].v] = max(f[t2[i].v], f[u] + sum[t2[i].v]);
+            in[t2[i].v] --;
+            if (in[t2[i].v] == 0) 
+                q[++rear] = t2[i].v;
         }
     }
+    for (int i = 1; i <= x; i++) res = max(res, f[i]);
     return res;
 }
 int main(){
 	cin >> n >> m;
 	int x, y;
 	for (int i = 1; i <= n; i++){
-		cin >> z[i];
+		cin >> val[i];
 	}
 	while(m--){
 		cin >> x >> y;
@@ -77,19 +77,25 @@ int main(){
 	}
 	for (int i = 1; i <= n; i++){
 		if (!dfn[i]) 
-		    dfs(i, 0);
+		    dfs(i);
 	}
-	int cnt2 = 0;
 	for (int u = 1; u <= n; u++){
 		for (int j = h[u]; j; j = t[j].next){
 			int v = t[j].v;
 			if (sccnum[u] != sccnum[v]){
 				addEdge2(sccnum[u], sccnum[v]);
-				cnt2++;
 			}
 		}
 	}
-	if (scccnt == 1) cout << val[1];
-	else cout << topo(cnt2);
+
+	// for (int i = 1; i <= n; i++){
+	// 	if (sccnum[i] == i){
+	// 		cout << i << ' ' << sum[i] << endl;
+	// 	}
+	// }
+	// if (scccnt == 1) cout << sum[1];
+	// else cout << topo(scccnt);
+    cout << topo(n);
+    system("pause");
 	return 0;
 }
