@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 const int maxn = 1e5 + 5, maxm = 1e5 + 5;
-int h[maxn], dep, dfn[maxn], low[maxn], scccnt, sccnum[maxn], tot, in[maxn], h2[maxn], tot2;
+int dep, dfn[maxn], low[maxn], scccnt, sccnum[maxn];
+int h[maxn], tot, h2[maxn], tot2, in[maxn];
 struct Node{
 	int v, next;
 }t[maxn], t2[maxn];
@@ -47,7 +48,8 @@ int topo(int x){
     int front = 1, rear = 0;
     for (int i = 1; i <= x; i++){
         // cout << in[i] << endl;
-        if (in[i] == 0 && sccnum[i] == i){
+        // if (in[i] == 0 && sccnum[i] == i){
+		if(sccnum[i] == i){
             q[++rear] = i;
             f[i] = sum[i];
         }
@@ -62,7 +64,7 @@ int topo(int x){
         }
     }
     for (int i = 1; i <= x; i++){
-        if (f[i] == n) res++;
+        if (f[i] == n) res += sum[i];
     } 
     return res;
 }
