@@ -2,7 +2,7 @@
 using namespace std;
 const int maxn = 1e5 + 5, maxm = 1e5 + 5;
 int dep, dfn[maxn], low[maxn], scccnt, sccnum[maxn];
-int h[maxn], tot, h2[maxn], tot2, in[maxn];
+int h[maxn], tot, h2[maxn], tot2, in[maxn], out[maxn];
 struct Node{
 	int v, next;
 }t[maxn], t2[maxn];
@@ -13,7 +13,7 @@ void addEdge(int u, int v){
 void addEdge2(int u, int v){
 	++tot2;
 	t2[tot2].v = v, t2[tot2].next = h2[u], h2[u] = tot2;
-	in[v] ++;
+	in[v] ++; out[u] ++;
 }
 stack <int> s;
 int sum[maxn];
@@ -87,7 +87,10 @@ int main(){
 			}
 		}
 	}
-
+	int ans = 0, cnt = 0;
+	for (int i = 1; i <= n; i++){
+		if (sccnum[i] == i && out[i] == 0) ans += sum[i], cnt++;
+	}
 	// for (int i = 1; i <= n; i++){
 	// 	if (sccnum[i] == i){
 	// 		cout << i << ' ' << sum[i] << endl;
@@ -95,7 +98,9 @@ int main(){
 	// }
 	// if (scccnt == 1) cout << sum[1];
 	// else cout << topo(scccnt);
-    cout << topo(n);
+    // cout << topo(n);
+	if (cnt > 1) cout << 0;
+	else cout << ans;
     system("pause");
 	return 0;
 }
