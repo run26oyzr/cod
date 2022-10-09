@@ -67,14 +67,17 @@ int choose_two(int x){
     return x * (x - 1) / 2;
 }
 int main(){
-    int n;
+    int n, m;
     int x, y;
     int times = 0;
-    while(cin >> n&&n){
+    while(cin >> m&&m){
         times++;
+        n = 0;
         init();
-    	for (int i = 1; i <= n; i++){
+    	for (int i = 1; i <= m; i++){
         	cin >> x >> y;
+            n = max(n, x);
+            n = max(n, y);
         	if (x == y) continue;
     	    addEdge(x, y); addEdge(y, x);
     	}
