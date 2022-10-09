@@ -28,22 +28,28 @@ void dfs(int u, int fa){
     for (int i = h[u]; i; i = t[i].next){
         int v = t[i].v;
         if(v == fa) continue;
-        if (u == root) son++;
         if (!dfn[v]){
             dfs(v, u);
+            if (u == root) son++;
             low[u] = min(low[v], low[u]);
             if (low[v] >= dfn[u]){
             	cut[u] = 1;
-                bccnum++;
-                while(1){
-                    int tmp = s.top(); s.pop();
-                    bcc[bccnum].push_back(tmp);
-                    if(tmp == v) break;
-                }
-                bcc[bccnum].push_back(u);
             }
         }
         else low[u] = min(low[u], dfn[v]);
+    }
+}
+int vis[maxn], cut_cnt, node_cnt;
+void dfs(int u){
+    vis[u] = 1;
+    node_cnt++;
+    if (cut[u]) cut_cnt++;
+    for (int i = h[u]; i; i = t[i].next){
+        int v = t[i].v;
+        if (!vis[v]) {
+            vis[v] = 1;
+            dfs(v);
+        }
     }
 }
 unsigned long long solution_cnt, exit_cnt;
@@ -58,6 +64,7 @@ void init(){
         cut[i] = 0;
         low[i] = 0;
         dfn[i] = 0;
+        vis[i] = 0;
         bcc[i].clear();
     }
     while(!s.empty()) s.pop();
@@ -94,26 +101,21 @@ int main(){
                 son = 0;
             }
     	}
-    	for (int i = 1; i <= bccnum; i++){
-            int cnt = 0;
-            int size = bcc[i].size();
-            if (size == 1){
-                exit_cnt++;
-                continue;
+    	for (int i = 1; i <= n; i++){
+            cut_cnt = 0;
+            node_cnt = 0;
+            if (!vis[i] && !cut[i]){
+                dfs(i);
+                if (cut_cnt == 0){
+                    exit_cnt += 2;
+                    solution_cnt *= choose_two(node_cnt);
+                }
+                else if (cut_cnt == 1){
+                    exit_cnt += 1;
+                    solution_cnt *= node_cnt - 1;
+                }
             }
-        	while(!bcc[i].empty()){
-            	if (cut[bcc[i].back()]) cnt++;
-            	bcc[i].pop_back();
-        	}
-            if (cnt == 0){
-                exit_cnt += 2;
-                solution_cnt *= choose_two(size);
-            }
-            else if (cnt == 1){
-                exit_cnt += 1;
-                solution_cnt *= size - 1;
-            }
-    	}
+        }
         printf("Case %d: %lld %lld\n", times, exit_cnt, solution_cnt);
     }
     system("pause");
