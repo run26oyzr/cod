@@ -38,5 +38,4 @@ void solve(){
 }
 signed main(){
 	solve();
-	system("pause");
 }

@@ -9,11 +9,11 @@ inline int read(){
 }
 const int maxn=300005;
 int a[maxn],b[maxn];
+map<int,int>m;
 void solve(){
 	//do something
 	int n=read();
 	bool fl=1;
-	map<int,int>m;
 	for(int i=1;i<=n;i++){
 		a[i]=read();
 		int k=a[i];
@@ -36,7 +36,18 @@ void solve(){
 	if(!fl) puts("NO");
 	else puts("YES");
 }
+void init(){
+    memset(a, 0, sizeof(a));
+    memset(b, 0, sizeof(b));
+    m.clear();
+    return;
+}
 signed main(){
-	solve();
-	system("pause");
+	for (int yanglishu = 1; yanglishu <= 10; yanglishu++){
+		init();
+		freopen(("./own_competition/B/yang_li/multiset" + std::to_string(yanglishu) + ".in").c_str(), "r", stdin);
+		freopen(("./own_competition/B/yang_li/multiset" + std::to_string(yanglishu) + ".out").c_str(), "w", stdout);
+		solve();
+	}
+	return 0;
 }
