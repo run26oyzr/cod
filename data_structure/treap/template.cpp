@@ -48,9 +48,11 @@ void del(int &id, int val){
 	if (t[id].val == val){
 		if (t[id].cnt > 1) {t[id].cnt--; t[id].size--; return;}
 		if (!t[id].ch[0] || !t[id].ch[1]) id = t[id].ch[0] + t[id].ch[1];
-		int k = t[t[id].ch[0]].rnd > t[t[id].ch[1]].rnd;
-		rotate(id, k);
-		del(id, val);
+		else{
+			int k = t[t[id].ch[0]].rnd > t[t[id].ch[1]].rnd;
+			rotate(id, k);
+			del(id, val);
+		}
 	}
 	else{
 		t[id].size--;
