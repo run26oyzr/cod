@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <windows.h>
 using namespace std;
-#define key_down(VK_NONAME) ((GetAsyncKeyState(VK_NONAME) & 0x8000) ? 1:0)
 int rand(int l, int r){
     return rand() % (r - l + 1) + l;
 }
