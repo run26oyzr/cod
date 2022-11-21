@@ -85,7 +85,7 @@ namespace treap{
 	}
 }
 using namespace treap;
-signed main(){
+void start(){
 	srand(109109);
 	int n=read(),m=read();
 	F(i,1,n) p=merge(p,add(i));
@@ -107,4 +107,24 @@ signed main(){
 		}
 	}
 	solve(p);
+}
+void init(){
+    //	int a[maxn],sz[maxn],lz[maxn],h[maxn],s[maxn][2],sx[maxn],gc[maxn],tot=0,p=0;
+    memset(a, 0, sizeof(a));
+    memset(sz, 0, sizeof(sz));
+    memset(lz, 0, sizeof(lz));
+    memset(h, 0, sizeof(h));
+    memset(s, 0, sizeof(s));
+    memset(sx, 0, sizeof(sx));
+    memset(gc, 0, sizeof(gc));
+    tot = p = 0;
+}
+signed main(){
+	for (int yanglishu = 1; yanglishu <= 10; yanglishu++){
+		init();
+		freopen(("./own_competition/C/yang_li/interval" + std::to_string(yanglishu) + ".in").c_str(), "r", stdin);
+		freopen(("./own_competition/C/yang_li/interval" + std::to_string(yanglishu) + ".out").c_str(), "w", stdout);
+		start();
+	}
+	return 0;
 }
