@@ -120,7 +120,7 @@ void init(){
     tot = p = 0;
 }
 signed main(){
-	for (int yanglishu = 1; yanglishu <= 10; yanglishu++){
+	for (int yanglishu = 1; yanglishu <= 12; yanglishu++){
 		init();
 		freopen(("./own_competition/C/yang_li/interval" + std::to_string(yanglishu) + ".in").c_str(), "r", stdin);
 		freopen(("./own_competition/C/yang_li/interval" + std::to_string(yanglishu) + ".out").c_str(), "w", stdout);

@@ -8,10 +8,10 @@ int rand(int l, int r){
 signed main(){
     int id;
     srand(time(0));
-    for (int yanglishu = 1; yanglishu <= 10; yanglishu++){
+    for (int yanglishu = 1; yanglishu <= 12; yanglishu++){
         int n, m;
         freopen(("./own_competition/C/yang_li/interval" + std::to_string(yanglishu) + ".in").c_str(), "w", stdout);
-        if (yanglishu <= 4)
+        if (yanglishu <= 5)
             n = m = 2000;
         else 
             n = m = 1e5;
