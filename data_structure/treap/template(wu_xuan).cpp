@@ -59,27 +59,29 @@ void del(int val){
     split(rt, val, y, z);
     split(y, val - 1, x, y);
     y = merge(t[y].ch[0], t[y].ch[1]);
+    rt = merge(merge(x, y), z);
 }
 int rank_(int val){
     int x, y;
     split(rt, val - 1, x, y);
     int k = t[x].size + 1;
-    merge(x, y);
+    rt = merge(x, y);
     return k;
 }
-int kth(int id, int k){
+int kth(int k){
+    int id = rt;
     while(id){
         int lsize = t[t[id].ch[0]].size;
         if (k <= lsize) id = t[id].ch[0];
-        else if (k > lsize + 1) id = t[id].ch[1];
+        else if (k > lsize + 1) id = t[id].ch[1], k = k - lsize - 1;
         else return t[id].val;
     }
 }
 int pre(int val){
-    return kth(rt, rank_(val) - 1);
+    return kth(rank_(val) - 1);
 }
 int hou_ji(int val){
-    return kth(rt, rank_(val + 1));
+    return kth(rank_(val + 1));
 }
 int main(){
     /*
