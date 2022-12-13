@@ -24,7 +24,8 @@ long double ans = 1;
 long long a_wei_shu = 0;
 int solve(int x){
     for (int i = 18; i >= 1; i--){
-        if (x > pow(10, i - 1)) return i;
+        if (x >= pow(10, i - 1)) return i;
+        //警钟敲烂，这里>=写成>，考试时少了25分！
     }
     return 1;
 }
@@ -51,8 +52,6 @@ long long qpow(int x, int y, int z){
     return wei_shu + solve(ans);
 }
 signed main(){
-    freopen("genshin.in", "r", stdin);
-    freopen("genshin.out", "w", stdout);
     int T = read();
     int x, y, z;
     while(T--){
