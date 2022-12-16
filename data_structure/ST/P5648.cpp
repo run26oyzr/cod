@@ -29,6 +29,12 @@ void init()
         }
         s.push(i);
     }
+    // for (int i = n; i >= 1; i--){
+    //     while(!s.empty() && a[s.top()] < a[i]) s.pop();
+    //     if (s.empty()) pos[i] = n + 1;
+    //     else pos[i] = s.top();
+    //     s.push(i);
+    // }
     while(!s.empty()){
         pos[s.top()] = n + 1;
         s.pop();
@@ -38,9 +44,14 @@ void init()
         d[i][0] = pos[i];
         f[i][0] = a[i] * (d[i][0] - i);
     }
+    d[n + 1][0] = n + 1;
 	for (int k = 1; k <= maxk; k++){
 		for (int i = 1; i <= n - (1 << k) + 1; i++){
             d[i][k] = d[d[i][k - 1]][k - 1];
+		}
+	}
+    for (int k = 1; k <= maxk; k++){
+		for (int i = 1; i <= n - (1 << k) + 1; i++){
             f[i][k] = f[i][k - 1] + f[f[i][k - 1]][k - 1];
 		}
 	}
@@ -49,27 +60,27 @@ signed main(){
     init();
     int l, r;
     int ans = 0;
-    for (int i = 1; i <= n; i++){
-        for (int k = 0; k <= maxk; k++){
-            cout << d[i][k] << ' ';
-        }
-        cout << endl;
-    }
+    // for (int i = 1; i <= n; i++){
+    //     for (int k = 0; k <= maxk; k++){
+    //         cout << d[i][k] << ' ';
+    //     }
+    //     cout << endl;
+    // }
     while(m--){
         l = read(); r = read();
         l = 1 + (l ^ ans) % n;
         r = 1 + (r ^ (ans + 1)) % (n - l + 1);
         // cout << l << ' ' << r << endl;
-        r += l;
+        r += l - 1;
         ans = 0;
         for (int i = maxk; i >= 0; i--){
             // cout << l << ' ' << i << ' ' << d[l][i] << endl;
-            if (d[l][i] < r){
+            if (d[l][i] <= r){
                 ans += f[l][i];
                 l = d[l][i];
             }
         }
-        ans += a[l] * (r - l);
+        ans += a[l] * (r - l + 1);
         printf("%d\n", ans);
     }
 }
