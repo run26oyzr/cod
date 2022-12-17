@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define int long long
 const int maxn = 1e5 + 5;
 
 inline int read()
@@ -70,7 +71,7 @@ void init(){
         sum[book[i]] += a[i];
     }
 }
-int main(){
+signed main(){
     init();
     int opt, L, R, c;
     while(m--){
