@@ -12,14 +12,10 @@ int main(){
     char c;
     int x, y;
     int tot = 0;
-    for (int i = 1; i <= n; i++){
-        
-    }
+    for (int i = 1; i <= n; i++) pos[i] = 1;
     while(q--){
         cin >> c >> x >> y;
-        if (c == 'A'){
-            pos[x] = y;
-        }
+        if (c == 'A') pos[x] = y;
         if (c == 'D'){
             int ans = 0;
             for (int i = 1; i <= n; i++) expirement[i].clear();
