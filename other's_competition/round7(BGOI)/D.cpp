@@ -31,6 +31,10 @@ int main(){
     // freopen("magic3.out", "w", stdout);
     int n, m;
     cin >> n >> m;
+    if (n == 1 && m == 0){
+        cout << 0;
+        return 0;
+    }
     int u, v;
     while(m--){
         scanf("%d %d\n", &u, &v);
