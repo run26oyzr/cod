@@ -43,13 +43,15 @@ signed main(){
     while(m--){
         opt = read();
         if (opt == 1){
-            cin >> x >> y >> z;
+            // cin >> x >> y >> z; 快读！！！！！
+            x = read(), y = read(), z = read();
             if (x > y) continue;
             add(x, z);
             add(y + 1, -z);
         }
         if (opt == 2){
-            cin >> x >> y;
+            // cin >> x >> y; 快读！！！！！
+            x = read(), y = read();
             if (y == 0){
                 add(x + 1, minus_(x, x - 1));
                 add(x, -minus_(x, x - 1));
@@ -60,7 +62,8 @@ signed main(){
             }
         }
         if (opt == 3){
-            cin >> x;
+            // cin >> x; 快读！！！！！
+            x = read();
             printf("%lld\n", query(x));
         }
     }
