@@ -47,6 +47,7 @@ int main(){
     for (int i = 1; i <= n - 1; i++){
         cin >> u >> v;
         addEdge(v, u);
+        addEdge(u, v);
     }
     dfs(s);
     f[s][0] = s;
