@@ -14,6 +14,7 @@ int v[maxn], ans[maxn];
 int maxnum, maxpos;
 bool vis[maxn];
 int dfs(int u){
+    if (ans[u]) return ans[u];
     int max = 0, smax = 0;
     for (int i = h[u]; i; i = t[i].nxt){
         int v = t[i].v;
