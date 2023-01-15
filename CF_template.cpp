@@ -13,6 +13,5 @@ signed main(){
     while(T--){
 
     }
-    
     return 0;
 }
