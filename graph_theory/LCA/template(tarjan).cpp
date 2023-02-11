@@ -27,7 +27,7 @@ void merge(int x, int y){
     fa[getfa(y)] = fx;
 }
 void dfs(int u, int father){
-    cout << u << endl;
+    // cout << u << endl;
     vis[u] = 1;
     for (int i = h[u]; i; i = t[i].nxt){
         int v = t[i].v;
@@ -45,8 +45,8 @@ void dfs(int u, int father){
     }
 }
 int main(){
-    freopen("P3379_1.in", "r", stdin);
-    freopen("P3379.out", "w", stdout);
+    // freopen("P3379_1.in", "r", stdin);
+    // freopen("P3379.out", "w", stdout);
     int n, m, s;
     cin >> n >> m >> s;
     int u, v;
