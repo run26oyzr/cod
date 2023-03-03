@@ -2,6 +2,13 @@
 using namespace std;
 #define int long long
 int a, b, c, x, y;
+/**
+ * ax+by=bx'+(a%b)y'
+ *      =bx'+(a-floor(a/b)*b)y'
+ *      =ay'+b(x'-floor(a/b)*y')
+ * so, x = y'
+ *     y = x' - floor(a/b) * y'
+*/
 int exgcd(int a, int b, int &x, int &y){
 	if (b == 0){x = 1, y = 0; return a;}
 	int res = exgcd(b, a % b, x, y);
