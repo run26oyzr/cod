@@ -19,8 +19,17 @@ inline int read()
 }
 char c[maxn][maxn];
 int a[10];
+int k;
+int calc(int x){
+    long long tmp = 1; 
+    long long res = 0;
+    for (int i = 0; i <= k; i++){
+        res += a[i] * tmp; tmp *= x;
+    }
+    return res;
+}
 int main(){
-    int n, m, k;
+    int n, m;
     cin >> n >> m >> k;
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
@@ -31,12 +40,8 @@ int main(){
         cin >> a[i];
     }
     for (int i = 1; i <= n; i++){
-        int val = 0;
-        for (int j = 0; j <= k; j++){
-            val += a[j] * pow(i - 1, j);
-        }
-        // cout << i - 1 << ' ' << val << endl;
-        if (val < m) c[i][val + 1] = '*';
+        int val = calc(i - 1) + 1;
+        if (val <= m && val >= 0) c[i][val] = '*';
     }
     for (int i = m; i >= 1; i--){
         for (int j = 1; j <= n; j++){
