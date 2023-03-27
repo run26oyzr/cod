@@ -18,11 +18,14 @@ struct Matrix{
     }
     Matrix operator * (const Matrix &T)const{
         Matrix res;
+		int tmp;
         for (int i = 1; i < Size; i++){
             for (int j = 1; j < Size; j++){
+				tmp = 0;
                 for (int k = 1; k < Size; k++){
-                    res.a[i][j] = (res.a[i][j] + a[i][k] * T.a[k][j]) % mod;
+					tmp = (tmp + a[i][k] * T.a[k][j]) % mod;
                 }
+				res.a[i][j] = tmp;
             }
         }
         return res;
