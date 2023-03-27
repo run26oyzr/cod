@@ -42,8 +42,8 @@ Matrix qpow(Matrix A, int b){
 int qpow(int A, int b){
     int res = 1;
     while(b){
-        if (b & 1) res = res * A;
-        A = A * A;
+        if (b & 1) res = res * A % mod;
+        A = A * A % mod;
         b >>= 1;
     }
     return res;
@@ -107,6 +107,7 @@ void change(int id, int L, int R, int a, int b){
 		change(ls, L, t[ls].right, a, b);
 		change(rs, t[rs].left, R, a, b);
 	}
+	update(id);
 }
 Node query(int id, int L, int R){
 	if (t[id].left == L && t[id].right == R){
