@@ -8,7 +8,7 @@ int p;
 struct Segment_Tree{
     int left, right;
     int sum, lazy;
-}t[maxn << 1];
+}t[maxn << 2];
 /** @brief
  * dfn:每个节点的新编号（可以保证每条重链和每个子树的编号连续）
  * rk:编号对应的节点
@@ -24,9 +24,9 @@ void update(int id){
 }
 void pushdown(int id){
     t[ls].lazy += t[id].lazy; t[ls].lazy %= p;
-    t[ls].sum += t[id].lazy; t[ls].sum %= p;
+    t[ls].sum += t[id].lazy * (t[ls].right - t[ls].left + 1); t[ls].sum %= p;
     t[rs].lazy += t[id].lazy; t[rs].lazy %= p;
-    t[rs].sum += t[id].lazy; t[rs].sum %= p;
+    t[rs].sum += t[id].lazy * (t[rs].right - t[rs].left + 1); t[rs].sum %= p;
     t[id].lazy = 0;
 }
 int a[maxn];
@@ -42,9 +42,12 @@ void buildtree(int id, int L, int R){
     update(id);
 }
 void change(int id, int L, int R, int val){
+    // cout << t[id].left << ' ' << t[id].right << endl;
+    // cout << L << ' ' << R << endl;
+    // cout << endl;
     if (t[id].left == L && t[id].right == R){
         t[id].lazy += val; t[id].lazy %= p;
-        t[id].sum += val; t[id].sum %= p;
+        t[id].sum += val * (R - L + 1); t[id].sum %= p;
         return;
     }
     pushdown(id);
@@ -57,6 +60,9 @@ void change(int id, int L, int R, int val){
     update(id);
 }
 int query(int id, int L, int R){
+    // cout << t[id].left << ' ' << t[id].right << endl;
+    // cout << L << ' ' << R << endl;
+    // cout << endl;
     if (t[id].left == L && t[id].right == R){
         // cout << L << ' ' << R << ' ' << t[id].sum << endl;
         return t[id].sum;
@@ -110,20 +116,24 @@ void change_Path(int x, int y, int val){
         x = fa[top[x]];
     }
     //在同一条重链中
-    if (dep[x] < dep[y]) swap(x, y);
+    if (dep[x] > dep[y]) swap(x, y);
     change(1, dfn[x], dfn[y], val);
 }
 int query_Path(int x, int y){
+    // cout << "query_Path-1" << endl;
     int res = 0;
     //不在同一条重链中
     while(top[x] != top[y]){
         if (dep[top[x]] < dep[top[y]]) swap(x, y);
-        res += query(1, dfn[top[x]], dfn[x]);
+        res += query(1, dfn[top[x]], dfn[x]); res %= p;
         x = fa[top[x]];
     }
     //在同一条重链中
-    if (dep[x] < dep[y]) swap(x, y);
-    res += query(1, dfn[x], dfn[y]);
+    if (dep[x] > dep[y]) swap(x, y);
+    // cout << "query_Path-2" << endl;
+    // cout << dep[x] << ' ' << dep[y] << endl;
+    // cout << dfn[x] << ' ' << dfn[y] << endl;
+    res += query(1, dfn[x], dfn[y]); res %= p;
     return res;
 }
 void change_Tree(int rt, int val){
