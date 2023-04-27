@@ -14,11 +14,11 @@ struct Segment_Tree{
  * rk:编号对应的节点
  * size:i及其子树中节点个数和
  * fa:i节点的父节点
- * son:i节点的重子节点
+ * wson:i节点的重子节点
  * top:i节点所在的重链的顶端
  * dep:i节点在树中的深度
 */
-int dfn[maxn], rk[maxn], size[maxn], fa[maxn], son[maxn], top[maxn], dep[maxn];
+int dfn[maxn], rk[maxn], size[maxn], fa[maxn], wson[maxn], top[maxn], dep[maxn];
 void update(int id){
     t[id].sum = (t[ls].sum + t[rs].sum) % p;
 }
@@ -91,8 +91,8 @@ void dfs1(int u, int father, int depth){
         if (v == father) continue;
         dfs1(v, u, depth + 1);
         size[u] += size[v];
-        if (size[son[u]] < size[v])
-            son[u] = v;
+        if (size[wson[u]] < size[v])
+            wson[u] = v;
     }
 }
 int cnt = 0;
@@ -100,11 +100,11 @@ void dfs2(int u, int Top){
     top[u] = Top;
     dfn[u] = ++cnt;
     rk[cnt] = u;
-    if (!son[u]) return;
-    dfs2(son[u], Top);
+    if (!wson[u]) return;
+    dfs2(wson[u], Top);
     for (int i = h[u]; i; i = e[i].next){
         int v = e[i].v;
-        if (v != son[u] && v != fa[u])
+        if (v != wson[u] && v != fa[u])
             dfs2(v, v);
     }
 }
