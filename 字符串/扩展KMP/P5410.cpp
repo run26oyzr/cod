@@ -5,10 +5,7 @@ const int maxn = 2 * 1e7 + 5;
 char s[maxn], ss[maxn];
 int z[maxn], p[maxn];
 int n, m;
-signed main(){
-    cin >> s + 1 >> ss + 1;
-    n = strlen(s + 1), m = strlen(ss + 1);
-
+void getZ(char s[]){
     int L = 1, R = 0;
     z[1] = m;
     for (int i = 2; i <= m; i++){
@@ -19,11 +16,9 @@ signed main(){
             R = i + z[i] - 1;
         }
     }
-    int res = 0;
-    for (int i = 1; i <= m; i++) res = res ^ (i * (z[i] + 1));
-    cout << res << endl;
-    
-    L = 1, R = 0;
+}
+void exKMP(char s[], char ss[]){
+    int L = 1, R = 0;
     for (int i = 1; i <= n; i++){
         if (i <= R) p[i] = min(z[i - L + 1], R - i + 1);
         while (i + p[i] <= n && s[i + p[i]] == ss[1 + p[i]]) p[i]++;
@@ -32,6 +27,17 @@ signed main(){
             R = i + p[i] - 1;
         }
     }
+}
+signed main(){
+    cin >> s + 1 >> ss + 1;
+    n = strlen(s + 1), m = strlen(ss + 1);
+
+    getZ(ss);
+    int res = 0;
+    for (int i = 1; i <= m; i++) res = res ^ (i * (z[i] + 1));
+    cout << res << endl;
+    
+    exKMP(s, ss);
     res = 0;
     for (int i = 1; i <= n; i++) res = res ^ (i * (p[i] + 1));
     cout << res;
