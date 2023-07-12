@@ -19,6 +19,7 @@ signed q[maxn];
 int front = 1, rear = 1;
 signed ans[205][maxn];
 signed main(){
+    int n;
     for (int i = 1; i <= n; i++){
         int k0 = getK0(i);
         while (front < rear && getK(q[front], q[front + 1]) >= k0) front++;
