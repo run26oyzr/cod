@@ -17,7 +17,6 @@ int getK0(int i){
 }
 signed q[maxn];
 int front = 1, rear = 1;
-signed ans[205][maxn];
 signed main(){
     int n;
     for (int i = 1; i <= n; i++){
