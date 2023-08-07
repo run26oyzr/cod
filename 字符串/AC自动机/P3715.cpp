@@ -144,6 +144,7 @@ signed main(){
 		for (int i = 1; i <= tot; i++)
 			B.a[i][tot + i] = 1;
 		A.a[1][1] = 1;
+		//A为一行矩阵，f[i]行对应的在左边，f[i-1]行对应的在右边
 		A = A * qpow(B, l);
 		int ans = 0;
 		for (int i = rt; i <= tot; i++){
