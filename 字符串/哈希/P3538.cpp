@@ -3,7 +3,7 @@
 using namespace std;
 const int maxn = 5 * 1e5 + 5;
 const int mod = 998244353, base = 131;
-//1e18级别的模数会导致 WA ？
+// TODO 1e18级别的模数会导致 WA ？
 int h[maxn];
 void Hash(char s[]){
     int n = strlen(s + 1);
