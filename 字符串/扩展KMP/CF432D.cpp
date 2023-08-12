@@ -6,7 +6,7 @@ char s[maxn];
 int z[maxn];
 int sum[maxn];
 int n;
-void getZ(char* s){
+void getZ(){
     int L = 1, R = 0;
     z[1] = n;
     for (int i = 2; i <= n; i++){
@@ -17,26 +17,26 @@ void getZ(char* s){
             R = i + z[i] - 1;
         }
     }
-    for (int i = 1; i <= n; i++) cout << z[i] << ' ';
-    cout << endl;
+    // for (int i = 1; i <= n; i++) cout << z[i] << ' ';
+    // cout << endl;
 }
 signed main(){
     cin >> s + 1;
     n = strlen(s + 1);
-    getZ(s);
+    getZ();
+    for (int i = 1; i <= n; i++)
+        sum[z[i]]++;
+    for (int i = n; i >= 1; i--)
+        sum[i] += sum[i + 1];
     int cnt = 0;
-    for (int i = 1; i <= n; i++){
-        sum[i] += sum[i - 1];
-        if (z[i] >= n - i + 1){
-            sum[i] += 1;
+    for (int i = n; i >= 1; i--){
+        if (z[i] >= n - i + 1)
             cnt++;
-        }
     }
     cout << cnt << endl;
     for (int i = n; i >= 1; i--){
-        if (z[i] >= n - i + 1){
-            cout << n - i + 1 << ' ' << sum[i] << endl;
-        }
+        if (z[i] >= n - i + 1)
+            cout << n - i + 1 << ' ' << sum[z[i]] << endl;
     }
     return 0;
 }
