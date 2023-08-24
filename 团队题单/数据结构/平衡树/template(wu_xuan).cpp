@@ -44,7 +44,7 @@ int merge(int x, int y){
         return x;
     }
     else{
-        t[y].ch[0] = merge(t[y].ch[0], x);
+        t[y].ch[0] = merge(x, t[y].ch[0]);
         update(y);
         return y;
     }
