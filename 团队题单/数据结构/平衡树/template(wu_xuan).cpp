@@ -9,7 +9,7 @@ struct Node{
 int tot = 0, rt = 0;
 int newNode(int val){
     ++tot;
-    t[tot].size = 0;
+    t[tot].size = 1;
     t[tot].rnd = rand();
     t[tot].val = val;
     t[tot].ch[0] = t[tot].ch[1] = 0;
