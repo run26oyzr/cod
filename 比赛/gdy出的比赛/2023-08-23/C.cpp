@@ -5,8 +5,8 @@ const int maxn = 2505;
 char s[maxn];
 int f[maxn][maxn];
 signed main(){
-    int n;
     int A, B, C;
+    int n;
     cin >> n;
     cin >> s + 1;
     cin >> A >> B >> C;
