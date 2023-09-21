@@ -1,39 +1,105 @@
 #include <bits/stdc++.h>
 #define int long long
 using namespace std;
-const int maxn = 5e4 + 5;
-struct Node{
-	int x, y;
-}t[maxn];
-bool cmp(Node a, Node b){
-	return a.x < b.x;
+const int maxn = 9 * 1e4 + 5;
+int h[605], tot = 0;
+int N;
+struct node{
+    int v, c, next;
+}t[maxn << 1];
+void addEdge(int u, int v, int c){
+	++tot;
+	t[tot].c = c; t[tot].v = v; t[tot].next = h[u]; h[u] = tot;
 }
-signed main(){
-	int n, k;
-	cin >> n >> k;
-	for (int i = 1; i <= n; i++)
-		cin >> t[i].x >> t[i].y;
-	Node a, b;
-	int cnt = 0;
-	sort(t + 1, t + n + 1, cmp);
-	for (int i = 1; i <= n; i++){
-		for (int j = i + 1; j <= min(i + 100, n); j++){
-			if (t[j].x - t[i].x >= k) break;
-			if (abs(t[i].y - t[j].y) < k){
-				cnt++; 
-				a.x = t[i].x, a.y = t[i].y;
-				b.x = t[j].x, b.y = t[j].y;
+int s, dis[605], vis[605], num[605];
+queue <int> q;
+bool spfa(){
+	while(!q.empty()) q.pop();
+	memset(dis, 0x3f, sizeof(dis));
+	memset(vis, 0, sizeof(vis));
+    memset(num, 0, sizeof(num));
+	dis[s] = 0; q.push(s); num[s] = 1; vis[s] = 1;
+	while(!q.empty()){
+		int u = q.front(); q.pop(); vis[u] = 0;
+		for (int i = h[u]; i; i = t[i].next){
+			int v = t[i].v;
+			if (dis[v] > dis[u] + t[i].c){
+				dis[v] = dis[u] + t[i].c;
+                num[v]++;
+				if (!vis[v]){
+					q.push(v); vis[v] = 1;
+				}
+				if(num[v] > N) 
+                    return true;
 			}
-			if (cnt > 1) break;
 		}
-		if (cnt > 1) break;
 	}
-	if (cnt > 1){
-		cout << -1;
-	}else if (cnt == 1){
-		cout << (k - abs(a.x - b.x)) * (k - abs(a.y - b.y));
-	}else{
-		cout << 0;
-	}
-	return 0;
+	return false;
+}
+int a[305][305], b[305][305];
+signed main(){
+    int T;
+    cin >> T;
+    while (T--){
+        tot = 0;
+        memset(h, 0, sizeof(h));
+        int n, m;
+        cin >> n >> m;
+        for (int i = 1; i <= n - 1; i++){
+            for (int j = 1; j <= m - 1; j++){
+                cin >> b[i][j];
+            }
+        }
+        for (int i = 1; i <= n; i++)
+            a[i][m] = 0;
+        for (int i = 1; i <= m; i++)
+            a[n][i] = 0;
+        for (int i = n - 1; i >= 1; i--){
+            for (int j = m - 1; j >= 1; j--){
+                a[i][j] = b[i][j] - a[i + 1][j] - a[i][j + 1] - a[i + 1][j + 1];
+            }
+        }
+        //1~n:r_i, 每行加减的量; n+1~n+m:c_i, 每列加减的量
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= m; j++){
+                int x = i; //r_i
+                int y = n + j; //c_j
+                if (i % 2 == j % 2){
+                    addEdge(y, x, a[i][j]);
+                    addEdge(x, y, 1e6 - a[i][j]); 
+                }else if (i % 2 == 0 || j % 2 == 0){
+                    addEdge(x, y, a[i][j]);
+                    addEdge(y, x, 1e6 - a[i][j]); 
+                }
+            }
+        }
+        N = s = n + m + 1;
+        for (int i = 1; i <= n; i++){
+            addEdge(s, i, 0);
+        }
+        if (spfa()){
+            cout << "NO" << endl;
+        }
+        else{
+            cout << "YES" << endl;
+            for (int i = 1; i <= n; i++){
+                for (int j = 1; j <= m; j++){
+                    int x = i; //r_i
+                    int y = n + j; //c_j
+                    if (i % 2 == j % 2){
+                        a[i][j] = a[i][j] + dis[y] - dis[x];
+                    }else if (i % 2 == 0 || j % 2 == 0){
+                        a[i][j] = a[i][j] - dis[y] + dis[x];
+                     }
+                }
+            }
+            for (int i = 1; i <= n; i++){
+                for (int j = 1; j <= m; j++){
+                    cout << a[i][j] << ' ';
+                }
+                cout << endl;
+            }
+        }   
+    }
+    return 0;
 }
